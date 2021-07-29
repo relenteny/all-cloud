@@ -1,0 +1,9 @@
+Leaderboards we are looking to have created:
+
+Fastest trial times
+
+Best line following accuracy
+
+Most cumulative track speed (monitored using the forward analog trigger percentage)
+
+Fastest car (lowest speed trap times)
