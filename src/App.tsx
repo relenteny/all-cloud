@@ -8,8 +8,10 @@ import { Container, CssBaseline } from '@material-ui/core';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import styles from './App.module.css';
 import LandingPage from './component/LandingPage/LandingPage';
-import OverallScore from './component/OverallScore/OverallScore';
+import TimeTrial from './component/TimeTrial/TimeTrial';
 import TrialData from './component/TrialData/TrialData';
+import OverallScore from "./component/OverallScore/OverallScore";
+import LineAccuracy from "./component/LineAccuracy/LineAccuracy";
 
 const theme = createTheme({
     palette: {
@@ -36,9 +38,11 @@ function App() {
             <Container className={styles.App}>
                 <Router>
                     <Switch>
-                        <Route path={'/overall-score'} component={OverallScore}></Route>
-                        <Route path={'/trial-data'} component={TrialData}></Route>
-                        <Route path={'/'} component={LandingPage}></Route>
+                        <Route path={'/overall-score'} component={OverallScore}/>
+                        <Route path={'/time-trial'} component={TimeTrial}/>
+                        <Route path={'/line-accuracy'} component={LineAccuracy}/>
+                        <Route path={'/trial-data'} component={TrialData}/>
+                        <Route path={'/'} component={LandingPage}/>
                     </Switch>
                 </Router>
             </Container>

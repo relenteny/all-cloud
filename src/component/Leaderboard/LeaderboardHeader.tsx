@@ -59,7 +59,7 @@ export const LeaderboardHeader = (headerProps: HeaderProps) => {
 export const PrimaryTitle = (titleProps: LeaderboardTitleProps) => {
     const classes = useStyles()
 
-    var additionalStyling = titleProps.additionalStyling
+    let additionalStyling = titleProps.additionalStyling;
     if(!additionalStyling) {
         additionalStyling = {}
     }

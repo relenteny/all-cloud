@@ -44,12 +44,12 @@ const IconMenu = () => {
                     </IconButton>
                 </Grid>
                 <Grid item xs={4}>
-                    <IconButton className={classes.iconContainer}>
+                    <IconButton className={classes.iconContainer} onClick={() => history.push('/line-accuracy')}>
                         <CompassCalibrationTwoToneIcon className={classes.icon}/>
                     </IconButton>
                 </Grid>
                 <Grid item xs={4}>
-                    <IconButton className={classes.iconContainer}>
+                    <IconButton className={classes.iconContainer} onClick={() => history.push('/time-trial')}>
                         <TimerTwoToneIcon className={classes.icon}/>
                     </IconButton>
                 </Grid>
@@ -62,7 +62,7 @@ const IconMenu = () => {
                     Line Accuracy
                 </Grid>
                 <Grid item xs={4}>
-                    Fastest Time
+                    Time Trial
                 </Grid>
             </Grid>
         </Box>
