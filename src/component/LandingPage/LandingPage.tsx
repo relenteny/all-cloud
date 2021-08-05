@@ -1,10 +1,16 @@
-import React from 'react'
 import { Box, Paper, makeStyles } from '@material-ui/core'
 import IconMenu from '../IconMenu/IconMenu'
-import SisLogo from '../../image/sis-logo.png'
+import LogoButton from "../Button/LogoButton";
 
 const useStyles = makeStyles(theme => ({
+    page: {
+        backgroundImage: "url('image/page-bg.jpg')",
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        height: '100vh',
+    },
     headerRow: {
+        height: '100px',
         padding: 4,
         borderBottomStyle: 'solid',
         borderBottom: 2,
@@ -19,11 +25,11 @@ const useStyles = makeStyles(theme => ({
 const LandingPage = () => {
     const classes = useStyles();
 
-    return <Box display='flex' justifyContent='center' alignItems='center' height='100vh'>
+    return <Box display='flex' justifyContent='center' alignItems='center' className={classes.page}>
         <Paper elevation={5}>
             <Box className={classes.headerRow} flexDirection='row'>
-                <Box display='flex'>
-                    <img src={SisLogo} alt=''/>
+                <Box display='flex' flexGrow={1} height='100%' justifyContent='center'>
+                    <LogoButton/>
                 </Box>
             </Box>
             <Box flexDirection='row' pt={4} pb={4}>

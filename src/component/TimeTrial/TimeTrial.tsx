@@ -1,9 +1,9 @@
-import React from 'react'
 import { DetailProps, PositionValue, PrimaryValue, RenderDetail, SecondaryValue, TotalValue } from '../Leaderboard/LeaderboardValue'
 import { HeaderProps, PrimaryTitle, RenderHeader, SecondaryTitle } from '../Leaderboard/LeaderboardHeader'
 import { Box } from '@material-ui/core'
 import { formatFloat } from '../../util/Utils'
 import Leaderboard from '../Leaderboard/Leaderboard'
+import PageLayout from "../Layout/PageLayout";
 
 function createData(position: number, driver: string, lap1Overall: string, lap1Trap: string, lap2Overall: string, lap2Trap: string, total: string, trial: number, heat: number) {
     return { position, driver, lap1Overall, lap1Trap, lap2Overall, lap2Trap, total, trial, heat }
@@ -14,7 +14,7 @@ const rows = [
     createData(2, 'Jane Smith', formatFloat(31.630), formatFloat(4.652), formatFloat(28.539), formatFloat(5.459), formatFloat(60.169), 2, 1),
 ]
 
-const renderHeader: RenderHeader = (row: number) => {
+const renderHeader: RenderHeader = (row, breakpoint) => {
     const header: JSX.Element[] = []
 
     if (row === 0) {
@@ -33,7 +33,7 @@ const renderHeader: RenderHeader = (row: number) => {
     return header
 }
 
-const renderDetail: RenderDetail = (row: any) => {
+const renderDetail: RenderDetail = (row, breakpoint) => {
     const detail: JSX.Element[] = []
 
     detail.push(<PositionValue data={row.position} justify='right' />)
@@ -58,9 +58,15 @@ const TimeTrial = () => {
         renderDetail: renderDetail
     }
 
-    return <Box display='block'>
-        <Leaderboard title='Time Trial' detail={detail} header={header}/>
-    </Box>
+    function buildLeaderboard() {
+        return <Box display='block'>
+            <Leaderboard title='Line Accuracy' detail={detail} header={header}/>
+        </Box>
+    }
+
+    const WrappedTimeTrial = PageLayout(buildLeaderboard)
+
+    return <WrappedTimeTrial/>
 }
 
 export default TimeTrial

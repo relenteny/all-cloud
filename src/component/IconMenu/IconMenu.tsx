@@ -1,4 +1,3 @@
-import React from 'react'
 import { useHistory, withRouter } from 'react-router-dom'
 import { Box, Grid, IconButton, makeStyles } from '@material-ui/core'
 import TimerTwoToneIcon from '@material-ui/icons/TimerTwoTone';

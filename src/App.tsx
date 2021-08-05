@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -35,7 +34,7 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Container className={styles.App}>
+            <Container className={styles.App} maxWidth={false}>
                 <Router>
                     <Switch>
                         <Route path={'/overall-score'} component={OverallScore}/>

@@ -1,19 +1,20 @@
-import React from 'react'
 import { Box, makeStyles, TableCell, TableCellProps, TableHead, TableRow, TableRowProps } from '@material-ui/core';
 import clsx from 'clsx'
 
 export interface RenderHeader {
-    (row: number): JSX.Element[];
+    (row: number, breakpoint: string): JSX.Element[]
 }
 
 export interface HeaderProps extends TableRowProps {
     nRows: number
     renderHeader: RenderHeader
+    breakpoint?: string
 }
 
 interface LeaderboardTitleProps extends TableCellProps {
     title?: string
     additionalStyling?: any
+    breakpoint?: string
 }
 
 const useStyles = makeStyles(theme => ({
@@ -26,12 +27,19 @@ const useStyles = makeStyles(theme => ({
         fontSize: '24px',
         fontWeight: 600,
         color: 'black',
-        border: 'none'
+        border: 'none',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: '12px',
+            fontWeight: 400,
+        },
     },
     secondaryTitle: {
         fontSize: '16px',
         fontWeight: 400,
-        border: 'none'
+        border: 'none',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: '12px',
+        },
     },
     headingCell: {
         padding: 4,
@@ -43,10 +51,10 @@ export const LeaderboardHeader = (headerProps: HeaderProps) => {
     const classes = useStyles()
     const elements: JSX.Element[] = []
 
-    for (var r = 0; r < headerProps.nRows; r++) {
+    for (let r = 0; r < headerProps.nRows; r++) {
         elements.push(
             <TableRow className={classes.row}>
-                {headerProps.renderHeader(r)}
+                {headerProps.renderHeader(r, headerProps.breakpoint ? headerProps.breakpoint : 'xl')}
             </TableRow>
         )
     }
