@@ -10,7 +10,7 @@ function createData(position: number, driver: string, total: string, averageLine
   return {position, driver, total, averageLineAccuracy, averageSpeedTrap, reactionTime, hits, score, trial, heat}
 }
 
-const renderHeader: RenderHeader = (row, breakpoint: string) => {
+const renderHeader: RenderHeader = (row, breakpoint) => {
   const header: JSX.Element[] = []
 
   header.push(leaderboardComponent(<PrimaryTitle width='5%'/>))
@@ -52,6 +52,16 @@ const renderDetail: RenderDetail = (row, breakpoint) => {
 const OverallScore = () => {
 
   const [rows, setRows] = useState<Array<any>>([])
+
+  const header: HeaderProps = {
+    nRows: 1,
+    renderHeader: renderHeader
+  }
+
+  const detail: DetailProps = {
+    rows: rows,
+    renderDetail: renderDetail
+  }
 
   const fetchData = () => {
     fetch('https://backend-dev.gsop.com/overall', {
@@ -96,17 +106,6 @@ const OverallScore = () => {
       clearInterval(interval)
     }
   }, [])
-
-
-  const header: HeaderProps = {
-    nRows: 1,
-    renderHeader: renderHeader
-  }
-
-  const detail: DetailProps = {
-    rows: rows,
-    renderDetail: renderDetail
-  }
 
   function buildLeaderboard() {
     return <Box display='block'>

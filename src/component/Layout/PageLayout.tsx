@@ -2,7 +2,7 @@ import React from "react";
 import {Box, makeStyles, Paper} from '@material-ui/core'
 import Header from "./Header";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   pageLayout: {
     height: '100%',
     width: '100%',
@@ -13,8 +13,11 @@ const useStyles = makeStyles({
     width: '100%',
     overflow: 'auto',
     backgroundColor: 'rgb(255, 255, 255, .85)',
+    [theme.breakpoints.down('sm')]: {
+      padding: '8px'
+    },
   }
-})
+}))
 
 
 const PageLayout = <P extends object>(Component: React.ComponentType<P>) => {

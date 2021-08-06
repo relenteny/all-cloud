@@ -50,9 +50,11 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     backgroundColor: theme.palette.primary.main,
     [theme.breakpoints.down('sm')]: {
+      height: '36px',
       fontSize: '18px',
     },
     [theme.breakpoints.down('xs')]: {
+      height: '30px',
       fontSize: '12px',
       fontWeight: 400,
       paddingLeft: 4,

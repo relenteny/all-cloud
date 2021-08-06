@@ -4,25 +4,29 @@ import {Box} from '@material-ui/core'
 import {formatFloat} from '../../util/Utils'
 import Leaderboard, {leaderboardComponent} from '../Leaderboard/Leaderboard'
 import PageLayout from "../Layout/PageLayout"
+import {useEffect, useState} from "react";
 
 function createData(position: number, driver: string, hits: number, forwardTrigger: string, reverseTrigger: string, lineAccuracy: string, trial: number, heat: number) {
   return {position, driver, hits, forwardTrigger, reverseTrigger, lineAccuracy, trial, heat}
 }
 
-const rows = [
-  createData(1, 'John Doe', 3, formatFloat(87.1, 2), formatFloat(67.09, 2), formatFloat(98.3, 2), 1, 1),
-  createData(2, 'Jane Smith', 2, formatFloat(83.65, 2), formatFloat(73.23, 2), formatFloat(91.54, 2), 1, 1),
-]
-
-const renderHeader: RenderHeader = () => {
+const renderHeader: RenderHeader = (row, breakpoint) => {
   const header: JSX.Element[] = []
 
   header.push(leaderboardComponent(<PrimaryTitle width='5%'/>))
-  header.push(leaderboardComponent(<PrimaryTitle width='40%' title='Driver' additionalStyling={{paddingLeft: '12px'}}/>))
-  header.push(leaderboardComponent(<SecondaryTitle align='center' width='10%' title='Hits'/>))
-  header.push(leaderboardComponent(<SecondaryTitle align='center' title='Average Forward Trigger'/>))
-  header.push(leaderboardComponent(<SecondaryTitle align='center' title='Average Reverse Trigger'/>))
-  header.push(leaderboardComponent(<PrimaryTitle align='center' width='15%' title='Average Line Accuracy'/>))
+  if (!/xs/.test(breakpoint)) {
+    header.push(leaderboardComponent(<PrimaryTitle width='40%' title='Driver' additionalStyling={{paddingLeft: '12px'}}/>))
+    header.push(leaderboardComponent(<SecondaryTitle align='center' width='10%' title='Hits'/>))
+    header.push(leaderboardComponent(<SecondaryTitle align='center' title='Average Forward Trigger'/>))
+    header.push(leaderboardComponent(<SecondaryTitle align='center' title='Average Reverse Trigger'/>))
+    header.push(leaderboardComponent(<PrimaryTitle align='center' width='15%' title='Average Line Accuracy'/>))
+  } else {
+    header.push(leaderboardComponent(<PrimaryTitle width='30%' title='Driver' additionalStyling={{paddingLeft: '12px'}}/>))
+    header.push(leaderboardComponent(<SecondaryTitle align='center' width='10%' title='Hits'/>))
+    header.push(leaderboardComponent(<SecondaryTitle align='center' title='Forward'/>))
+    header.push(leaderboardComponent(<SecondaryTitle align='center' title='Reverse'/>))
+    header.push(leaderboardComponent(<PrimaryTitle align='center' width='15%' title='Accuracy'/>))
+  }
 
   return header
 }
@@ -42,6 +46,9 @@ const renderDetail: RenderDetail = (row: any) => {
 }
 
 const LineAccuracy = () => {
+
+  const [rows, setRows] = useState<Array<any>>([])
+
   const header: HeaderProps = {
     nRows: 1,
     renderHeader: renderHeader
@@ -51,6 +58,48 @@ const LineAccuracy = () => {
     rows: rows,
     renderDetail: renderDetail
   }
+
+  const fetchData = () => {
+    fetch('https://backend-dev.gsop.com/lineaccuracy', {
+      method: "GET",
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      mode: 'cors'
+    })
+    .then(response => response.json())
+    .then(data => {
+      const rows: any[] = data
+      let position: number = 1
+      const result: any[] = []
+      rows.map((row: any) => {
+        const data = row.Data
+
+        const trial = data[0].ScalarValue
+        const driver = data[1].ScalarValue
+        const lineAccuracy = data[2].ScalarValue
+        const hits = data[3].ScalarValue
+        const forwardTrigger = data[4].ScalarValue
+        const reverseTrigger = data[5].ScalarValue
+
+        result.push(createData(position++, driver, hits, formatFloat(forwardTrigger,2), formatFloat(reverseTrigger,2), formatFloat(lineAccuracy,2), trial, 0))
+        return true
+      })
+      setRows(result)
+    })
+  }
+
+  useEffect(() => {
+    fetchData()
+    const interval = setInterval(() => {
+      fetchData()
+    }, 5000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
 
   function buildLeaderboard() {
     return <Box display='block'>

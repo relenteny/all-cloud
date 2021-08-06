@@ -4,7 +4,7 @@ const useStyles = makeStyles(theme => ({
   logoButton: {
     width: '200px',
     [theme.breakpoints.down('sm')]: {
-      width: '150px'
+      width: '125px'
     },
     height: 'auto',
     backgroundImage: 'url(image/sis-logo.png)',
