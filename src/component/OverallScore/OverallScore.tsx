@@ -1,27 +1,21 @@
 import {DetailProps, PositionValue, PrimaryValue, RenderDetail, SecondaryValue, TotalValue} from '../Leaderboard/LeaderboardValue'
-import {HeaderProps, RenderHeader, SecondaryTitle, PrimaryTitle} from '../Leaderboard/LeaderboardHeader'
+import {HeaderProps, PrimaryTitle, RenderHeader, SecondaryTitle} from '../Leaderboard/LeaderboardHeader'
 import {Box} from '@material-ui/core'
-import {formatFloat} from '../../util/Utils'
 import Leaderboard, {leaderboardComponent} from '../Leaderboard/Leaderboard'
 import PageLayout from "../Layout/PageLayout";
-import {useEffect, useState} from "react";
-import React from 'react'
+import React, {useEffect, useState} from "react";
+import {formatFloat} from "../../util/Utils";
 
 function createData(position: number, driver: string, total: string, averageLineAccuracy: string, averageSpeedTrap: string, reactionTime: string, hits: number, score: string, trial: number, heat: number) {
   return {position, driver, total, averageLineAccuracy, averageSpeedTrap, reactionTime, hits, score, trial, heat}
 }
 
-const demoRows = [
-  createData(1, 'John Doe', formatFloat(30.659), formatFloat(5.236, 2), formatFloat(9.453), formatFloat(0.975), 1534, formatFloat(60.112), 1, 1),
-  createData(2, 'Jane Smith', formatFloat(31.630), formatFloat(4.652, 2), formatFloat(8.539), formatFloat(5.459), 8, formatFloat(60.169), 2, 1),
-]
-
 const renderHeader: RenderHeader = (row, breakpoint: string) => {
   const header: JSX.Element[] = []
 
   header.push(leaderboardComponent(<PrimaryTitle width='5%'/>))
-  header.push(leaderboardComponent(<PrimaryTitle width='40%' title='Driver' additionalStyling={{paddingLeft: '12px'}}/>))
   if (!/xs/.test(breakpoint)) {
+    header.push(leaderboardComponent(<PrimaryTitle width='40%' title='Driver' additionalStyling={{paddingLeft: '12px'}}/>))
     header.push(leaderboardComponent(<SecondaryTitle align='center' title='Total Trial Time'/>))
     header.push(leaderboardComponent(<SecondaryTitle align='center' title='Average Line Accuracy'/>))
     header.push(leaderboardComponent(<SecondaryTitle align='center' title='Average Speed Trap Time'/>))
@@ -29,6 +23,7 @@ const renderHeader: RenderHeader = (row, breakpoint: string) => {
     header.push(leaderboardComponent(<SecondaryTitle align='center' title='Hits'/>))
     header.push(leaderboardComponent(<PrimaryTitle align='center' title='Overall Score'/>))
   } else {
+    header.push(leaderboardComponent(<PrimaryTitle width='30%' title='Driver' additionalStyling={{paddingLeft: '12px'}}/>))
     header.push(leaderboardComponent(<SecondaryTitle align='center' title='Time'/>))
     header.push(leaderboardComponent(<SecondaryTitle align='center' title='Accuracy'/>))
     header.push(leaderboardComponent(<PrimaryTitle align='center' title='Score'/>))
@@ -58,8 +53,7 @@ const OverallScore = () => {
 
   const [rows, setRows] = useState<Array<any>>([])
 
-  useEffect(() => {
-    //setRows(demoRows)
+  const fetchData = () => {
     fetch('https://backend-dev.gsop.com/overall', {
       method: "GET",
       headers: {
@@ -69,8 +63,39 @@ const OverallScore = () => {
       mode: 'cors'
     })
     .then(response => response.json())
-    .then(data => setRows(data));
-  }, []);
+    .then(data => {
+      const rows: any[] = data
+      let position: number = 1
+      const result: any[] = []
+      rows.map((row: any) => {
+        const data = row.Data
+
+        const trial = data[0].ScalarValue
+        const driver = data[1].ScalarValue
+        const total = data[2].ScalarValue
+        const averageLineAccuracy = data[3].ScalarValue
+        const averageSpeedTrap = data[4].ScalarValue
+        const reactionTime = data[5].ScalarValue
+        const hits = data[6].ScalarValue
+        const score = data[7].ScalarValue
+
+        result.push(createData(position++, driver, formatFloat(total), formatFloat(averageLineAccuracy, 2), formatFloat(averageSpeedTrap), formatFloat(reactionTime), hits, formatFloat(score), trial, 0))
+        return true
+      })
+      setRows(result)
+    })
+  }
+
+  useEffect(() => {
+    fetchData()
+    const interval = setInterval(() => {
+      fetchData()
+    }, 5000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
 
 
   const header: HeaderProps = {

@@ -30,7 +30,14 @@ const useStyles = makeStyles(theme => ({
     border: 0,
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: 6,
+      maxWidth: '100px',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    },
   },
   valueContainer: {
     height: '42px',
@@ -43,9 +50,14 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     backgroundColor: theme.palette.primary.main,
     [theme.breakpoints.down('sm')]: {
+      fontSize: '18px',
+    },
+    [theme.breakpoints.down('xs')]: {
       fontSize: '12px',
       fontWeight: 400,
-    },
+      paddingLeft: 4,
+      paddingRight: 4,
+    }
   },
   positionContainer: {
     borderLeftWidth: 0,

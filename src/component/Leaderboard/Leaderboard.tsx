@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.dark,
     border: 'none',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '20px'
+      fontSize: '18px'
     },
   },
 }))

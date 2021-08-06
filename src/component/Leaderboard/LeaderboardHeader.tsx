@@ -29,6 +29,10 @@ const useStyles = makeStyles(theme => ({
         color: 'black',
         border: 'none',
         [theme.breakpoints.down('sm')]: {
+            fontSize: '18px',
+            fontWeight: 400,
+        },
+        [theme.breakpoints.down('xs')]: {
             fontSize: '12px',
             fontWeight: 400,
         },
