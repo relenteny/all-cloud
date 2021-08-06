@@ -84,7 +84,7 @@ const getValueJustification = (justification?: string) => {
 export const PositionValue = (valueProps: ValueProps) => {
   const classes = useStyles()
 
-  return <TableCell className={classes.cell}>
+  return <TableCell {...valueProps} className={classes.cell}>
     <Box display='flex' alignItems='center' justifyContent={getValueJustification(valueProps.justify)}
          className={clsx(classes.valueContainer, classes.positionContainer)}>{valueProps.data}</Box>
   </TableCell>
@@ -132,7 +132,7 @@ export const DetailRow = (rowProps: RowProps) => {
 export const LeaderBoardDetail = (detailProps: DetailProps) => {
   return <TableBody>
     {detailProps.rows.map((row, index) => (
-        <DetailRow {...detailProps} index={index} breakpoint={detailProps.breakpoint}/>
+        <DetailRow key={index} {...detailProps} index={index} breakpoint={detailProps.breakpoint}/>
     ))}
   </TableBody>
 }

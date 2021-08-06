@@ -3,11 +3,13 @@ import IconMenu from '../IconMenu/IconMenu'
 import LogoButton from "../Button/LogoButton";
 
 const useStyles = makeStyles(theme => ({
-    page: {
+    landingPage: {
         backgroundImage: "url('image/page-bg.jpg')",
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        height: '100vh',
+        height: '100%',
+        width: '100%',
+        overflow: 'auto',
     },
     headerRow: {
         height: '100px',
@@ -25,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 const LandingPage = () => {
     const classes = useStyles();
 
-    return <Box display='flex' justifyContent='center' alignItems='center' className={classes.page}>
+    return <Box display='flex' justifyContent='center' alignItems='center' className={classes.landingPage}>
         <Paper elevation={5}>
             <Box className={classes.headerRow} flexDirection='row'>
                 <Box display='flex' flexGrow={1} height='100%' justifyContent='center'>
@@ -34,9 +36,6 @@ const LandingPage = () => {
             </Box>
             <Box flexDirection='row' pt={4} pb={4}>
                 <IconMenu />
-            </Box>
-            <Box flexDirection='row'>
-                Footer
             </Box>
         </Paper>
     </Box>

@@ -53,7 +53,7 @@ export const LeaderboardHeader = (headerProps: HeaderProps) => {
 
     for (let r = 0; r < headerProps.nRows; r++) {
         elements.push(
-            <TableRow className={classes.row}>
+            <TableRow key={r} className={classes.row}>
                 {headerProps.renderHeader(r, headerProps.breakpoint ? headerProps.breakpoint : 'xl')}
             </TableRow>
         )
@@ -67,20 +67,23 @@ export const LeaderboardHeader = (headerProps: HeaderProps) => {
 export const PrimaryTitle = (titleProps: LeaderboardTitleProps) => {
     const classes = useStyles()
 
-    let additionalStyling = titleProps.additionalStyling;
-    if(!additionalStyling) {
-        additionalStyling = {}
+    let additionalStyling = {}
+    let elementProps = titleProps
+    if (titleProps.additionalStyling) {
+        additionalStyling = titleProps.additionalStyling
+        elementProps = Object.assign({}, titleProps)
+        delete elementProps.additionalStyling
     }
 
     const addedStyles = makeStyles({
-        root: {
+        customStyling: {
             ...additionalStyling,
         },
     })
 
-    return <TableCell {...titleProps} className={classes.headingCell}>
+    return <TableCell {...elementProps} className={classes.headingCell}>
         {titleProps.title !== undefined &&
-            <Box className={clsx(classes.primaryTitle, addedStyles().root)}>{titleProps.title}</Box>
+            <Box className={clsx(classes.primaryTitle, addedStyles().customStyling)}>{titleProps.title}</Box>
         }
     </TableCell>
 }

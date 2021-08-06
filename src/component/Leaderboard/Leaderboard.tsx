@@ -2,6 +2,7 @@ import {Box, makeStyles, Table, TableContainer, withWidth} from '@material-ui/co
 import {RouteComponentProps, withRouter} from 'react-router-dom'
 import {DetailProps, LeaderBoardDetail} from './LeaderboardValue'
 import {HeaderProps, LeaderboardHeader} from './LeaderboardHeader'
+import React from "react";
 
 const useStyles = makeStyles(theme => ({
   leaderboard: {
@@ -26,6 +27,12 @@ interface LeaderBoardConfiguration extends RouteComponentProps {
   width: string
   detail: DetailProps
   header: HeaderProps
+}
+
+export const leaderboardComponent = (jsxElement: JSX.Element) => {
+  return <React.Fragment key={Math.random()}>
+    {jsxElement}
+  </React.Fragment>
 }
 
 export const Leaderboard = (configuration: LeaderBoardConfiguration) => {

@@ -12,7 +12,7 @@ const data = [{time: 1627306371, gs: 4, accuracy: 10, forwardTrigger: 90, revers
 ]
 
 const useStyles = makeStyles(theme => ({
-  page: {
+  trialDataPage: {
     height: '100%',
   },
   title: {
@@ -85,7 +85,7 @@ const TrialData = () => {
   const theme = useTheme();
 
   function buildTrialData() {
-    return <Box display='block' className={classes.page}>
+    return <Box display='block' className={classes.trialDataPage}>
       <Box display='flex' flexGrow={1} justifyContent='center' className={classes.title}>Trial Data</Box>
       <Box>
         <Paper elevation={4}>

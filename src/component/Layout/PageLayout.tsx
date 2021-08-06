@@ -3,7 +3,7 @@ import {Box, makeStyles, Paper} from '@material-ui/core'
 import Header from "./Header";
 
 const useStyles = makeStyles({
-  page: {
+  pageLayout: {
     height: '100%',
     width: '100%',
     overflow: 'auto',
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 const PageLayout = <P extends object>(Component: React.ComponentType<P>) => {
   const classes = useStyles()
 
-  return (props: P) => (<Box className={classes.page}>
+  return (props: P) => (<Box className={classes.pageLayout}>
         <Paper elevation={4} className={classes.paper}>
           <Header/>
           <Component {...props as P}/>
