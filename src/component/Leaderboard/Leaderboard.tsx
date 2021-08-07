@@ -44,7 +44,7 @@ export const Leaderboard = (configuration: LeaderBoardConfiguration) => {
       <Box display='flex' flexGrow={1} justifyContent='center' className={classes.title}>{configuration.title}</Box>
       <TableContainer>
         <Table>
-          <LeaderboardHeader {...configuration.header} breakpoint={breakpoint} />
+          <LeaderboardHeader {...configuration.header} breakpoint={breakpoint}/>
           <LeaderBoardDetail {...configuration.detail} breakpoint={breakpoint}/>
         </Table>
       </TableContainer>

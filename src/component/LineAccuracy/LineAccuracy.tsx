@@ -1,5 +1,5 @@
 import {DetailProps, PositionValue, PrimaryValue, RenderDetail, SecondaryValue, TotalValue} from '../Leaderboard/LeaderboardValue'
-import {HeaderProps,  RenderHeader, SecondaryTitle, PrimaryTitle} from '../Leaderboard/LeaderboardHeader'
+import {HeaderProps, PrimaryTitle, RenderHeader, SecondaryTitle} from '../Leaderboard/LeaderboardHeader'
 import {Box} from '@material-ui/core'
 import {formatFloat} from '../../util/Utils'
 import Leaderboard, {leaderboardComponent} from '../Leaderboard/Leaderboard'
@@ -83,7 +83,7 @@ const LineAccuracy = () => {
         const forwardTrigger = data[4].ScalarValue
         const reverseTrigger = data[5].ScalarValue
 
-        result.push(createData(position++, driver, hits, formatFloat(forwardTrigger,2), formatFloat(reverseTrigger,2), formatFloat(lineAccuracy,2), trial, 0))
+        result.push(createData(position++, driver, hits, formatFloat(forwardTrigger, 2), formatFloat(reverseTrigger, 2), formatFloat(lineAccuracy, 2), trial, 0))
         return true
       })
       setRows(result)

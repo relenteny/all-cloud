@@ -124,7 +124,7 @@ const TimeTrial = () => {
 
   function buildLeaderboard() {
     return <Box display='block'>
-      <Leaderboard title='Line Accuracy' detail={detail} header={header}/>
+      <Leaderboard title='Time Trial' detail={detail} header={header}/>
     </Box>
   }
 

@@ -20,7 +20,8 @@ const useStyles = makeStyles(theme => ({
 const LogoButton = () => {
   const classes = useStyles()
 
-  return <Button className={classes.logoButton} onClick={() => (window.location.href='https://www.superiorintegratedsystems.com')}/>
+  return <Button className={classes.logoButton}
+                 onClick={() => (window.location.href = 'https://www.superiorintegratedsystems.com')}/>
 }
 
 export default LogoButton

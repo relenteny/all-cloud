@@ -1,103 +1,103 @@
-import { Box, makeStyles, TableCell, TableCellProps, TableHead, TableRow, TableRowProps } from '@material-ui/core';
+import {Box, makeStyles, TableCell, TableCellProps, TableHead, TableRow, TableRowProps} from '@material-ui/core';
 import clsx from 'clsx'
 
 export interface RenderHeader {
-    (row: number, breakpoint: string): JSX.Element[]
+  (row: number, breakpoint: string): JSX.Element[]
 }
 
 export interface HeaderProps extends TableRowProps {
-    nRows: number
-    renderHeader: RenderHeader
-    breakpoint?: string
+  nRows: number
+  renderHeader: RenderHeader
+  breakpoint?: string
 }
 
 interface LeaderboardTitleProps extends TableCellProps {
-    title?: string
-    additionalStyling?: any
-    breakpoint?: string
+  title?: string
+  additionalStyling?: any
+  breakpoint?: string
 }
 
 const useStyles = makeStyles(theme => ({
-    row: {
-        padding: 4,
-        backgroundColor: theme.palette.primary.dark,
-        border: 'none'
+  row: {
+    padding: 4,
+    backgroundColor: theme.palette.primary.dark,
+    border: 'none'
+  },
+  primaryTitle: {
+    fontSize: '24px',
+    fontWeight: 600,
+    color: 'black',
+    border: 'none',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '18px',
+      fontWeight: 400,
     },
-    primaryTitle: {
-        fontSize: '24px',
-        fontWeight: 600,
-        color: 'black',
-        border: 'none',
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '18px',
-            fontWeight: 400,
-        },
-        [theme.breakpoints.down('xs')]: {
-            fontSize: '12px',
-            fontWeight: 400,
-        },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '12px',
+      fontWeight: 400,
     },
-    secondaryTitle: {
-        fontSize: '16px',
-        fontWeight: 400,
-        border: 'none',
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '12px',
-        },
+  },
+  secondaryTitle: {
+    fontSize: '16px',
+    fontWeight: 400,
+    border: 'none',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '12px',
     },
-    headingCell: {
-        padding: 4,
-        border: 'none',
-    },
+  },
+  headingCell: {
+    padding: 4,
+    border: 'none',
+  },
 }))
 
 export const LeaderboardHeader = (headerProps: HeaderProps) => {
-    const classes = useStyles()
-    const elements: JSX.Element[] = []
+  const classes = useStyles()
+  const elements: JSX.Element[] = []
 
-    for (let r = 0; r < headerProps.nRows; r++) {
-        elements.push(
-            <TableRow key={r} className={classes.row}>
-                {headerProps.renderHeader(r, headerProps.breakpoint ? headerProps.breakpoint : 'xl')}
-            </TableRow>
-        )
-    }
+  for (let r = 0; r < headerProps.nRows; r++) {
+    elements.push(
+        <TableRow key={r} className={classes.row}>
+          {headerProps.renderHeader(r, headerProps.breakpoint ? headerProps.breakpoint : 'xl')}
+        </TableRow>
+    )
+  }
 
-    return <TableHead>
-        {elements}
-    </TableHead>
+  return <TableHead>
+    {elements}
+  </TableHead>
 }
 
 export const PrimaryTitle = (titleProps: LeaderboardTitleProps) => {
-    const classes = useStyles()
+  const classes = useStyles()
 
-    let additionalStyling = {}
-    let elementProps = titleProps
-    if (titleProps.additionalStyling) {
-        additionalStyling = titleProps.additionalStyling
-        elementProps = Object.assign({}, titleProps)
-        delete elementProps.additionalStyling
+  let additionalStyling = {}
+  let elementProps = titleProps
+  if (titleProps.additionalStyling) {
+    additionalStyling = titleProps.additionalStyling
+    elementProps = Object.assign({}, titleProps)
+    delete elementProps.additionalStyling
+  }
+
+  const addedStyles = makeStyles({
+    customStyling: {
+      ...additionalStyling,
+    },
+  })
+
+  return <TableCell {...elementProps} className={classes.headingCell}>
+    {titleProps.title !== undefined &&
+    <Box className={clsx(classes.primaryTitle, addedStyles().customStyling)}>{titleProps.title}</Box>
     }
-
-    const addedStyles = makeStyles({
-        customStyling: {
-            ...additionalStyling,
-        },
-    })
-
-    return <TableCell {...elementProps} className={classes.headingCell}>
-        {titleProps.title !== undefined &&
-            <Box className={clsx(classes.primaryTitle, addedStyles().customStyling)}>{titleProps.title}</Box>
-        }
-    </TableCell>
+  </TableCell>
 }
 
 export const SecondaryTitle = (titleProps: LeaderboardTitleProps) => {
-    const classes = useStyles()
+  const classes = useStyles()
 
-    return <TableCell {...titleProps} className={classes.headingCell}>
-        {titleProps.title !== undefined &&
-            <Box className={classes.secondaryTitle}>{titleProps.title}</Box>
-        }
-    </TableCell>
+  return <TableCell {...titleProps} className={classes.headingCell}>
+    {titleProps.title !== undefined &&
+    <Box className={classes.secondaryTitle}>{titleProps.title}</Box>
+    }
+  </TableCell>
 }
