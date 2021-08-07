@@ -17,8 +17,8 @@ const renderHeader: RenderHeader = (row, breakpoint) => {
   if (!/xs/.test(breakpoint)) {
     header.push(leaderboardComponent(<PrimaryTitle width='40%' title='Driver' additionalStyling={{paddingLeft: '12px'}}/>))
     header.push(leaderboardComponent(<SecondaryTitle align='center' title='Total Trial Time'/>))
-    header.push(leaderboardComponent(<SecondaryTitle align='center' title='Average Line Accuracy'/>))
     header.push(leaderboardComponent(<SecondaryTitle align='center' title='Average Speed Trap Time'/>))
+    header.push(leaderboardComponent(<SecondaryTitle align='center' title='Average Line Accuracy'/>))
     header.push(leaderboardComponent(<SecondaryTitle align='center' title='Reaction Time'/>))
     header.push(leaderboardComponent(<SecondaryTitle align='center' title='Hits'/>))
     header.push(leaderboardComponent(<PrimaryTitle align='center' title='Overall Score'/>))
@@ -38,11 +38,13 @@ const renderDetail: RenderDetail = (row, breakpoint) => {
   detail.push(leaderboardComponent(<PositionValue data={row.position} justify='right'/>))
   detail.push(leaderboardComponent(<PrimaryValue data={row.driver}/>))
   detail.push(leaderboardComponent(<SecondaryValue data={row.total} justify='right'/>))
-  detail.push(leaderboardComponent(<SecondaryValue data={row.averageLineAccuracy + '%'} justify='right'/>))
   if (!/xs/.test(breakpoint)) {
     detail.push(leaderboardComponent(<SecondaryValue data={row.averageSpeedTrap} justify='right'/>))
+    detail.push(leaderboardComponent(<SecondaryValue data={row.averageLineAccuracy + '%'} justify='right'/>))
     detail.push(leaderboardComponent(<SecondaryValue data={row.reactionTime} justify='right'/>))
     detail.push(leaderboardComponent(<SecondaryValue data={row.hits} justify='right'/>))
+  } else {
+    detail.push(leaderboardComponent(<SecondaryValue data={row.averageLineAccuracy + '%'} justify='right'/>))
   }
   detail.push(leaderboardComponent(<TotalValue data={row.score} justify='right'/>))
 
